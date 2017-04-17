@@ -24,6 +24,7 @@ void LinkedList_put(LinkedList* list, char data)
     newNode->pNext = NULL;
 
     Node* currentNode = list->start;
+    Node* prevNode = NULL;
 
     // If empty list
     if (currentNode == NULL)
@@ -33,9 +34,12 @@ void LinkedList_put(LinkedList* list, char data)
     else
     {
         while (currentNode != NULL)
+        {
+            prevNode = currentNode;
             currentNode = currentNode->pNext;
+        }
 
-        currentNode->pNext = newNode;
+        prevNode->pNext = newNode;
     }
 
 }
@@ -71,29 +75,105 @@ void LinkedList_insert(LinkedList* list, unsigned int index, char data)
     Node* prevNode = NULL;
     Node* currentNode = list->start;
 
+    while (currentNode != NULL && i != index)
+    {
+        prevNode = currentNode;
+        currentNode = currentNode->pNext;
+        i++;
+    }
+
+    if (currentNode == NULL)
+    {
+        fprintf(stderr, "Tried to insert element at index greater than the list's length.\n");
+    }
+    else
+    {
+        Node* newNode = malloc(sizeof(Node));
+        newNode->data = data;
+        newNode->pNext = currentNode;
+
+        prevNode->pNext = newNode;
+    }
+}
+
+char LinkedList_get(LinkedList* list, unsigned int index)
+{
+    if (index < 0)
+    {
+        fprintf(stderr, "Tried to get element in list at negative index.\n");
+        return -1;
+    }
+
+    int i = 0;
+    Node* currentNode = list->start;
+
+
+    while (i != index)
+    {
+        currentNode = currentNode->pNext;
+        i++;
+    }
+
+    return currentNode->data;
+}
+
+char LinkedList_pop(LinkedList* list, unsigned int index)
+{
+    if (index < 0)
+    {
+        fprintf(stderr, "Tried to pop element in list at negative index.\n");
+        return -1;
+    }
+
+    int i = 0;
+    Node* prevNode = NULL;
+    Node* currentNode = list->start;
+
     while (i != index)
     {
         prevNode = currentNode;
         currentNode = currentNode->pNext;
+        i++;
     }
 
-    Node* newNode = malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->pNext = currentNode;
+    char data = currentNode->data;
 
-    prevNode->pNext = newNode;
+    // If index=0
+    if (prevNode == NULL) {
+        list->start = NULL;
+    }
+    else
+    {
+        prevNode->pNext = currentNode->pNext;
+    }
 
+    free(currentNode);
+
+    return data;
 }
 
-char LinkedList_get(LinkedList* list, unsigned int index);
-
-char LinkedList_pop(LinkedList* list, unsigned int index);
-
-void LinkedList_delete(LinkedList* list, unsigned int index);
+void LinkedList_delete(LinkedList* list, unsigned int index)
+{
+    LinkedList_pop(list, index);
+}
 
 int LinkedList_isEmpty(LinkedList* list)
 {
     return list->start == NULL;
+}
+
+int LinkedList_length(LinkedList* list)
+{
+    int n = 0;
+    Node* currentNode = list->start;
+
+    while (currentNode != NULL)
+    {
+        currentNode = currentNode->pNext;
+        n++;
+    }
+
+    return n;
 }
 
 void LinkedList_free(LinkedList* list)

@@ -21,6 +21,8 @@ int main() {
     LinkedList_put(list, 'b');
     LinkedList_put(list, 'c');
 
+    LinkedList_length(list);
+
     LinkedList_free(list);
 
     return 0;
