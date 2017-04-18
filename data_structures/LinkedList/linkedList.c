@@ -13,6 +13,10 @@ LinkedList* LinkedList_new()
         fprintf(stderr, "Failed to create new LinkedList.\n");
         exit(EXIT_FAILURE);
     }
+    else
+    {
+        list->start = NULL;
+    }
 
     return list;
 }
