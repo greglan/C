@@ -23,7 +23,17 @@ void MinHeap_swap();
 
 void MinHeap_insert(MinHeap* t, int data)
 {
+    Node* new_node = malloc(sizeof(Node));
 
+    if (new_node == NULL){
+        fprintf(stderr, "Failed to allocate memory for new node.\n");
+    }
+    else
+    {
+        new_node->data = data;
+        // Insert at the bottom of the tree
+        // Dfs
+    }
 }
 
 int MinHeap_getMin(MinHeap* t);
