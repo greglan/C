@@ -22,38 +22,92 @@ Stack* Stack_new()
     return s;
 }
 
+void Stack_free(Stack* s)
+{
+    if (Stack_isValid(s))
+    {
+        while (!Stack_isEmpty(s))
+            Stack_pop(s);
+        free(s);
+    }
+}
+
 unsigned char Stack_isEmpty(Stack* s)
 {
-    return (s->head == NULL);
+    if (Stack_isValid(s))
+    {
+        return (s->head == NULL);
+    }
+    else
+        return 1;
 }
 
 void Stack_push(Stack* s, int data)
 {
-    Node* new_node = malloc(sizeof(Node));
-
-    if (new_node == NULL)
+    if (Stack_isValid(s))
     {
-        fprintf(stderr, "Failed to allocate memory for new stack.");
-    }
-    else
-    {
-        new_node->data = data;
+        Node* new_node = malloc(sizeof(Node));
 
-        if (Stack_isEmpty(s))
+        if (!Stack_NodeisValid(new_node))
         {
-            s->head = new_node;
+            fputs("Failed to allocate memory for new node.\n", stderr);
         }
         else
         {
-            Node* head = s->head;
-            head->next = new_node;
-            s->head = new_node;
+            new_node->data = data;
+
+            if (Stack_isEmpty(s))
+            {
+                s->head = new_node;
+                new_node->previous = NULL;
+            }
+            else
+            {
+                Node* head = s->head;
+                new_node->previous = head;
+                s->head = new_node;
+            }
         }
     }
 }
 
 int Stack_pop(Stack* s)
 {
-    Node* head = s->head;
-    s->head = head->
+    if (Stack_isValid(s))
+    {
+        if (!Stack_isEmpty(s))
+        {
+            Node* head = s->head;
+            s->head = head->previous;
+
+            int data = head->data;
+            free(head);
+
+            return data;
+        }
+        else
+        {
+            fputs("Pop from empty stack.\n", stderr);
+        }
+    }
+}
+
+unsigned char Stack_isValid(Stack* s)
+{
+    unsigned char state = (s == NULL);
+    if (state)
+    {
+        fputs("Invalid stack pointer.\n", stderr);
+    }
+    return !state;
+}
+
+unsigned char Stack_NodeisValid(Node* s)
+{
+    unsigned char state = (s == NULL);
+    if (state)
+    {
+        fputs("Invalid node pointer.\n", stderr);
+    }
+    return !state;
 }
