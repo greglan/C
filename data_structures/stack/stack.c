@@ -10,7 +10,7 @@ Stack* Stack_new()
 
     if (s == NULL)
     {
-        fprintf(stderr, "Failed to allocate memory for new stack.");
+        fputs("Failed to allocate memory for new stack.", stderr);
     }
     else
     {
