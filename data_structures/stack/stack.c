@@ -4,8 +4,6 @@
 
 #include "stack.h"
 
-// FIXME: check if stack is not null
-
 Stack* Stack_new()
 {
     Stack* s = malloc(sizeof(Stack));
@@ -32,7 +30,7 @@ void Stack_free(Stack* s)
     }
 }
 
-unsigned char Stack_isEmpty(Stack* s)
+char Stack_isEmpty(Stack* s)
 {
     if (Stack_isValid(s))
     {
@@ -92,9 +90,9 @@ int Stack_pop(Stack* s)
     }
 }
 
-unsigned char Stack_isValid(Stack* s)
+char Stack_isValid(Stack* s)
 {
-    unsigned char state = (s == NULL);
+    char state = (s == NULL);
     if (state)
     {
         fputs("Invalid stack pointer.\n", stderr);
@@ -102,9 +100,9 @@ unsigned char Stack_isValid(Stack* s)
     return !state;
 }
 
-unsigned char Stack_NodeisValid(Node* s)
+char Stack_NodeisValid(Node* s)
 {
-    unsigned char state = (s == NULL);
+    char state = (s == NULL);
     if (state)
     {
         fputs("Invalid node pointer.\n", stderr);

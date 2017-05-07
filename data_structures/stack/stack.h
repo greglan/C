@@ -23,10 +23,10 @@ struct Stack{
 
 Stack* Stack_new();
 void Stack_free(Stack* s);
-unsigned char Stack_isEmpty(Stack* s);
+char Stack_isEmpty(Stack* s);
 void Stack_push(Stack* s, int data);
 int Stack_pop(Stack* s);
-unsigned char Stack_isValid(Stack* s);
-unsigned char Stack_NodeisValid(Node* s);
+char Stack_isValid(Stack* s);
+char Stack_NodeisValid(Node* s);
 
 #endif //STACK_STACK_H
